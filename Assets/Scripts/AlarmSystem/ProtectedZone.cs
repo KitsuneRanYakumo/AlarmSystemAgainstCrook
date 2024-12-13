@@ -3,14 +3,14 @@ using UnityEngine;
 
 public class ProtectedZone : MonoBehaviour
 {
-    public event Action CrookCome;
-    public event Action CrookGone;
+    public event Action<bool> CrookCome;
+    public event Action<bool> CrookGone;
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.GetComponent<Crook>())
         {
-            CrookCome?.Invoke();
+            CrookCome?.Invoke(true);
         }
     }
 
@@ -18,7 +18,7 @@ public class ProtectedZone : MonoBehaviour
     {
         if (other.GetComponent<Crook>())
         {
-            CrookGone?.Invoke();
+            CrookGone?.Invoke(false);
         }
     }
 }

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class DoorControllerTrigger : MonoBehaviour
 {
-    [SerializeField] private KeyCode _interactionButton = KeyCode.E;
+    [SerializeField] private UserInput _input;
 
     private Door _door;
     private bool _hasOpener = false;
@@ -29,13 +29,16 @@ public class DoorControllerTrigger : MonoBehaviour
         if (_hasOpener == false)
             return;
 
-        if (_door.IsOpened == false && Input.GetKeyDown(_interactionButton))
+        if (_input.PressedInteractionButton)
         {
-            _door.Open();
-        }
-        else if (_door.IsOpened && Input.GetKeyDown(_interactionButton))
-        {
-            _door.Close();
+            if (_door.IsOpened)
+            {
+                _door.Close();
+            }
+            else
+            {
+                _door.Open();
+            }
         }
     }
 }

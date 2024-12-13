@@ -17,14 +17,14 @@ public class AlarmSystem : MonoBehaviour
 
     private void OnEnable()
     {
-        _zone.CrookCome += OnAlarm;
-        _zone.CrookGone += OffAlarm;
+        _zone.CrookCome += ChangeAlarm;
+        _zone.CrookGone += ChangeAlarm;
     }
 
     private void OnDisable()
     {
-        _zone.CrookCome -= OnAlarm;
-        _zone.CrookGone -= OffAlarm;
+        _zone.CrookCome -= ChangeAlarm;
+        _zone.CrookGone -= ChangeAlarm;
     }
 
     private void Awake()
@@ -39,43 +39,26 @@ public class AlarmSystem : MonoBehaviour
         _wait = new WaitForSecondsRealtime(_delayBetweenChangeVolume);
     }
 
-    private void OnAlarm()
+    private void ChangeAlarm(bool isIncreasing)
     {
         if (_currentCoroutine != null)
             StopCoroutine(_currentCoroutine);
 
-        _currentCoroutine = StartCoroutine(IncreaseVolume());
+        _currentCoroutine = StartCoroutine(ChangeVolume(isIncreasing));
     }
 
-    private void OffAlarm()
+    private IEnumerator ChangeVolume(bool isIncreasing)
     {
-        if (_currentCoroutine != null)
-        {
-            StopCoroutine(_currentCoroutine);
-        }
+        float targetValue = GetTargetValue(isIncreasing);
 
-        _currentCoroutine = StartCoroutine(DecreaseVolume());
-    }
-
-    private IEnumerator IncreaseVolume()
-    {
         if (_audioSource.isPlaying == false)
         {
             _audioSource.Play();
         }
 
-        for (float i = _minVolume; i < _maxVolume; i += _speedIncreaseVolume)
+        for (float i = GetSingOfNumber(isIncreasing) * _audioSource.volume; i < targetValue; i += _speedIncreaseVolume)
         {
-            _audioSource.volume = Mathf.MoveTowards(_audioSource.volume, _maxVolume, _speedIncreaseVolume);
-            yield return _wait;
-        }
-    }
-
-    private IEnumerator DecreaseVolume()
-    {
-        for (float i = _maxVolume; i > _minVolume; i -= _speedIncreaseVolume)
-        {
-            _audioSource.volume = Mathf.MoveTowards(_audioSource.volume, _minVolume, _speedIncreaseVolume);
+            _audioSource.volume = Mathf.MoveTowards(_audioSource.volume, targetValue, _speedIncreaseVolume);
             yield return _wait;
         }
 
@@ -83,5 +66,21 @@ public class AlarmSystem : MonoBehaviour
         {
             _audioSource.Stop();
         }
+    }
+
+    private float GetTargetValue(bool isIncreasing)
+    {
+        if (isIncreasing)
+            return _maxVolume;
+        else
+            return _minVolume;
+    }
+
+    private int GetSingOfNumber(bool isIncreasing)
+    {
+        if (isIncreasing)
+            return 1;
+        else
+            return -1;
     }
 }

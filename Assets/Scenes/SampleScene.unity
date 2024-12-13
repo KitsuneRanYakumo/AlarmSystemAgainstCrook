@@ -156,7 +156,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23abefb44f1bdc144bb0e28687533d14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speedIncreaseVolume: 0.05
+  _speedIncreaseVolume: 0.1
   _delayBetweenChangeVolume: 1
 --- !u!82 &249505610
 AudioSource:
@@ -172,7 +172,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 0
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -357,6 +357,7 @@ GameObject:
   - component: {fileID: 352013755}
   - component: {fileID: 352013756}
   - component: {fileID: 352013762}
+  - component: {fileID: 352013763}
   m_Layer: 0
   m_Name: Crook
   m_TagString: Untagged
@@ -376,6 +377,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35ad3632170ed944aa18d322c40863b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _input: {fileID: 352013763}
   _moveSpeed: 0.075
   _rotateSpeed: 0.5
   _body: {fileID: 352013760}
@@ -520,6 +522,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e55f0d32e25335d4fb7d36f5210da4d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &352013763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 352013754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6198529ab1290f44b5ddb00c0b3c4c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interactionButton: 101
 --- !u!1 &352226070 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1000010728641318, guid: 23d25b2e2d4364dd4b92c52ef40cd36e, type: 3}
@@ -537,7 +552,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21c31f9d50f953046b80d9be2481a624, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interactionButton: 101
+  _input: {fileID: 352013763}
 --- !u!1 &544849345
 GameObject:
   m_ObjectHideFlags: 0

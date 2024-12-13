@@ -3,10 +3,10 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class Door : MonoBehaviour
 {
-    private Animator _animator;
+    private readonly int _openTrigger = Animator.StringToHash("Open");
+    private readonly int _closeTrigger = Animator.StringToHash("Close");
 
-    private readonly int OpenTrigger = Animator.StringToHash("Open");
-    private readonly int CloseTrigger = Animator.StringToHash("Close");
+    private Animator _animator;
 
     public bool IsOpened { get; private set; } = false;
 
@@ -18,12 +18,12 @@ public class Door : MonoBehaviour
     public void Open()
     {
         IsOpened = true;
-        _animator.SetTrigger(OpenTrigger);
+        _animator.SetTrigger(_openTrigger);
     }
 
     public void Close()
     {
         IsOpened = false;
-        _animator.SetTrigger(CloseTrigger);
+        _animator.SetTrigger(_closeTrigger);
     }
 }

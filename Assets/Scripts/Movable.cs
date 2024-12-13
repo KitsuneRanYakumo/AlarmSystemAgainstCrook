@@ -2,15 +2,11 @@ using UnityEngine;
 
 public class Movable : MonoBehaviour
 {
+    [SerializeField] private UserInput _input;
     [SerializeField] private float _moveSpeed = 10;
     [SerializeField] private float _rotateSpeed = 10;
     [SerializeField] private Transform _body;
     [SerializeField] private Transform _camera;
-
-    private const string Horizontal = "Horizontal";
-    private const string Vertical = "Vertical";
-    private const string MouseX = "Mouse X";
-    private const string MouseY = "Mouse Y";
 
     private void FixedUpdate()
     {
@@ -20,7 +16,7 @@ public class Movable : MonoBehaviour
 
     private void Move()
     {
-        Vector3 direction = new Vector3(Input.GetAxis(Horizontal), 0, Input.GetAxis(Vertical));
+        Vector3 direction = new Vector3(_input.HorizontalMovement, 0, _input.VerticalMovement);
         Vector3 velocity = _moveSpeed * direction;
 
         transform.Translate(velocity);
@@ -28,7 +24,7 @@ public class Movable : MonoBehaviour
 
     private void Rotate()
     {
-        _body.Rotate(_rotateSpeed * Input.GetAxis(MouseX) * Vector3.up);
-        _camera.Rotate(_rotateSpeed * -Input.GetAxis(MouseY) * Vector3.right);
+        _body.Rotate(_rotateSpeed * _input.HorizontalMovementMouse * Vector3.up);
+        _camera.Rotate(_rotateSpeed * _input.VerticalMovementMouse * Vector3.right);
     }
 }
