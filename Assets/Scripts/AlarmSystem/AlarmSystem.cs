@@ -49,14 +49,14 @@ public class AlarmSystem : MonoBehaviour
 
     private IEnumerator ChangeVolume(bool isIncreasing)
     {
-        float targetValue = GetTargetValue(isIncreasing);
+        float targetValue = Utils.GetTargetValue(isIncreasing, _maxVolume, _minVolume);
 
         if (_audioSource.isPlaying == false)
         {
             _audioSource.Play();
         }
 
-        for (float i = GetSingOfNumber(isIncreasing) * _audioSource.volume; i < targetValue; i += _speedIncreaseVolume)
+        for (float i = Utils.GetSingOfNumber(isIncreasing) * _audioSource.volume; i < targetValue; i += _speedIncreaseVolume)
         {
             _audioSource.volume = Mathf.MoveTowards(_audioSource.volume, targetValue, _speedIncreaseVolume);
             yield return _wait;
@@ -66,21 +66,5 @@ public class AlarmSystem : MonoBehaviour
         {
             _audioSource.Stop();
         }
-    }
-
-    private float GetTargetValue(bool isIncreasing)
-    {
-        if (isIncreasing)
-            return _maxVolume;
-        else
-            return _minVolume;
-    }
-
-    private int GetSingOfNumber(bool isIncreasing)
-    {
-        if (isIncreasing)
-            return 1;
-        else
-            return -1;
     }
 }
